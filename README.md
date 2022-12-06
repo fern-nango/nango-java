@@ -1,19 +1,31 @@
-# {Company} Java Library
+# Nango Java Library
 
-![Maven Central](https://img.shields.io/maven-central/v/io.github.fern-api/{company}) 
-![Sonatype Nexus (Releases)](https://img.shields.io/nexus/r/io.github.fern-api/{company}?server=https%3A%2F%2Fs01.oss.sonatype.org)
+![Maven Central](https://img.shields.io/maven-central/v/io.github.fern-api/nango) 
+![Sonatype Nexus (Releases)](https://img.shields.io/nexus/r/io.github.fern-api/nango?server=https%3A%2F%2Fs01.oss.sonatype.org)
 
 ## Documentation
 
-API documentation is available at <{docs_url}>.
+API documentation is available [here](https://docs.nango.dev/add-sync).
 
 ## Usage
 
-Check out the [sample app](.sample-app/app.java) which consumes this SDK!
+Check out the [sample app](.sample-app/src/main/java/sample/App.java) which consumes this SDK!
 
 ```java
-// start with env variables
-TODO
+NangoApiClient nango = new NangoApiClient("https://localhost:3003");
+try {
+  nango.sync().add(Add.Request.builder()
+    .body(NangoSyncConfig.builder()
+    .method(NangoHttpMethod.GET)
+    .baseUrl("https://www.reddit.com/r/${subreddit}/new.json")
+    .responsePath("data.children")
+    .pagingCursorRequestPath("after")
+    .pagingCursorObjectResponsePath("paging.next.after")
+    .build())
+    .build());
+} catch (AddException ex) {
+  System.out.println("Failed to add sync: " + ex.getMessage());
+}
 ```
 
 ## Beta status
