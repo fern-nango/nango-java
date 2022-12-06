@@ -4,17 +4,18 @@ import com.nango.api.client.sync.endpoints.Add;
 import com.nango.api.client.sync.exceptions.AddException;
 import com.nango.api.client.sync.types.NangoHttpMethod;
 import com.nango.api.client.sync.types.NangoSyncConfig;
+import com.nango.api.core.Environment;
 import java.lang.String;
 import com.nango.api.NangoApiClient;
 
 public final class App {
   public static void main(String[] args) {
-    NangoApiClient nango = new NangoApiClient("https://localhost:3003");
+    NangoApiClient nango = new NangoApiClient(Environment.LOCAL);
     try {
       nango.sync().add(Add.Request.builder()
           .body(NangoSyncConfig.builder()
+              .url("https://www.reddit.com/r/${subreddit}/new.json")
               .method(NangoHttpMethod.GET)
-              .baseUrl("https://www.reddit.com/r/${subreddit}/new.json")
               .responsePath("data.children")
               .pagingCursorRequestPath("after")
               .pagingCursorObjectResponsePath("paging.next.after")
