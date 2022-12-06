@@ -35,17 +35,17 @@ Add this dependency to your project's POM:
 Check out the [sample app](sample-app/src/main/java/sample/App.java) which consumes this SDK!
 
 ```java
-NangoApiClient nango = new NangoApiClient("https://localhost:3003");
+NangoApiClient nango = new NangoApiClient(Environment.LOCAL);
 try {
-  nango.sync().add(Add.Request.builder()
-    .body(NangoSyncConfig.builder()
-      .method(NangoHttpMethod.GET)
-      .baseUrl("https://www.reddit.com/r/${subreddit}/new.json")
-      .responsePath("data.children")
-      .pagingCursorRequestPath("after")
-      .pagingCursorObjectResponsePath("paging.next.after")
-      .build())
-    .build());
+    nango.sync().add(Add.Request.builder()
+        .body(NangoSyncConfig.builder()
+            .url("https://www.reddit.com/r/${subreddit}/new.json")
+            .method(NangoHttpMethod.GET)
+            .responsePath("data.children")
+            .pagingCursorRequestPath("after")
+            .pagingCursorObjectResponsePath("paging.next.after")
+            .build())
+        .build());
 } catch (AddException ex) {
   System.out.println("Failed to add sync: " + ex.getMessage());
 }
