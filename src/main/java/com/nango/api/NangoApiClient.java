@@ -1,7 +1,7 @@
 package com.nango.api;
 
 import com.nango.api.client.sync.SyncServiceClient;
-import java.lang.String;
+import com.nango.api.core.Environment;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
@@ -9,8 +9,12 @@ import java.util.function.Supplier;
 public final class NangoApiClient {
   private final Supplier<SyncServiceClient> syncServiceClient;
 
-  public NangoApiClient(String url) {
-    this.syncServiceClient = memoize(() -> new SyncServiceClient(url));
+  public NangoApiClient() {
+    this(Environment.LOCAL);
+  }
+
+  public NangoApiClient(Environment environment) {
+    this.syncServiceClient = memoize(() -> new SyncServiceClient(environment.getUrl()));
   }
 
   public final SyncServiceClient sync() {

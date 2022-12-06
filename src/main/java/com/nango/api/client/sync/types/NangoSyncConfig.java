@@ -19,6 +19,8 @@ import java.util.Optional;
     builder = NangoSyncConfig.Builder.class
 )
 public final class NangoSyncConfig {
+  private final String url;
+
   private final Optional<String> baseUrl;
 
   private final NangoHttpMethod method;
@@ -61,15 +63,16 @@ public final class NangoSyncConfig {
 
   private int _cachedHashCode;
 
-  NangoSyncConfig(Optional<String> baseUrl, NangoHttpMethod method, Map<String, Object> headers,
-      Optional<Object> body, Map<String, Object> queryParams, Optional<String> uniqueKey,
-      Optional<String> responsePath, Optional<String> pagingCursorRequestPath,
-      Optional<String> pagingCursorMetadataResponsePath,
+  NangoSyncConfig(String url, Optional<String> baseUrl, NangoHttpMethod method,
+      Map<String, Object> headers, Optional<Object> body, Map<String, Object> queryParams,
+      Optional<String> uniqueKey, Optional<String> responsePath,
+      Optional<String> pagingCursorRequestPath, Optional<String> pagingCursorMetadataResponsePath,
       Optional<String> pagingCursorObjectResponsePath, Optional<String> pagingUrlPath,
       Optional<String> pagingHeaderLinkRel, Optional<Boolean> autoMapping,
       Optional<String> mappedTable, Optional<Integer> frequency,
       Optional<String> pizzlyConnectionId, Optional<String> pizzlyProviderConfigKey,
       Optional<Integer> maxTotal, Optional<String> friendlyName, Map<String, Object> metadata) {
+    this.url = url;
     this.baseUrl = baseUrl;
     this.method = method;
     this.headers = headers;
@@ -90,6 +93,11 @@ public final class NangoSyncConfig {
     this.maxTotal = maxTotal;
     this.friendlyName = friendlyName;
     this.metadata = metadata;
+  }
+
+  @JsonProperty("url")
+  public String getUrl() {
+    return url;
   }
 
   @JsonProperty("base_url")
@@ -199,30 +207,34 @@ public final class NangoSyncConfig {
   }
 
   private boolean equalTo(NangoSyncConfig other) {
-    return baseUrl.equals(other.baseUrl) && method.equals(other.method) && headers.equals(other.headers) && body.equals(other.body) && queryParams.equals(other.queryParams) && uniqueKey.equals(other.uniqueKey) && responsePath.equals(other.responsePath) && pagingCursorRequestPath.equals(other.pagingCursorRequestPath) && pagingCursorMetadataResponsePath.equals(other.pagingCursorMetadataResponsePath) && pagingCursorObjectResponsePath.equals(other.pagingCursorObjectResponsePath) && pagingUrlPath.equals(other.pagingUrlPath) && pagingHeaderLinkRel.equals(other.pagingHeaderLinkRel) && autoMapping.equals(other.autoMapping) && mappedTable.equals(other.mappedTable) && frequency.equals(other.frequency) && pizzlyConnectionId.equals(other.pizzlyConnectionId) && pizzlyProviderConfigKey.equals(other.pizzlyProviderConfigKey) && maxTotal.equals(other.maxTotal) && friendlyName.equals(other.friendlyName) && metadata.equals(other.metadata);
+    return url.equals(other.url) && baseUrl.equals(other.baseUrl) && method.equals(other.method) && headers.equals(other.headers) && body.equals(other.body) && queryParams.equals(other.queryParams) && uniqueKey.equals(other.uniqueKey) && responsePath.equals(other.responsePath) && pagingCursorRequestPath.equals(other.pagingCursorRequestPath) && pagingCursorMetadataResponsePath.equals(other.pagingCursorMetadataResponsePath) && pagingCursorObjectResponsePath.equals(other.pagingCursorObjectResponsePath) && pagingUrlPath.equals(other.pagingUrlPath) && pagingHeaderLinkRel.equals(other.pagingHeaderLinkRel) && autoMapping.equals(other.autoMapping) && mappedTable.equals(other.mappedTable) && frequency.equals(other.frequency) && pizzlyConnectionId.equals(other.pizzlyConnectionId) && pizzlyProviderConfigKey.equals(other.pizzlyProviderConfigKey) && maxTotal.equals(other.maxTotal) && friendlyName.equals(other.friendlyName) && metadata.equals(other.metadata);
   }
 
   @Override
   public int hashCode() {
     if (_cachedHashCode == 0) {
-      _cachedHashCode = Objects.hash(this.baseUrl, this.method, this.headers, this.body, this.queryParams, this.uniqueKey, this.responsePath, this.pagingCursorRequestPath, this.pagingCursorMetadataResponsePath, this.pagingCursorObjectResponsePath, this.pagingUrlPath, this.pagingHeaderLinkRel, this.autoMapping, this.mappedTable, this.frequency, this.pizzlyConnectionId, this.pizzlyProviderConfigKey, this.maxTotal, this.friendlyName, this.metadata);
+      _cachedHashCode = Objects.hash(this.url, this.baseUrl, this.method, this.headers, this.body, this.queryParams, this.uniqueKey, this.responsePath, this.pagingCursorRequestPath, this.pagingCursorMetadataResponsePath, this.pagingCursorObjectResponsePath, this.pagingUrlPath, this.pagingHeaderLinkRel, this.autoMapping, this.mappedTable, this.frequency, this.pizzlyConnectionId, this.pizzlyProviderConfigKey, this.maxTotal, this.friendlyName, this.metadata);
     }
     return _cachedHashCode;
   }
 
   @Override
   public String toString() {
-    return "NangoSyncConfig{" + "baseUrl: " + baseUrl + ", method: " + method + ", headers: " + headers + ", body: " + body + ", queryParams: " + queryParams + ", uniqueKey: " + uniqueKey + ", responsePath: " + responsePath + ", pagingCursorRequestPath: " + pagingCursorRequestPath + ", pagingCursorMetadataResponsePath: " + pagingCursorMetadataResponsePath + ", pagingCursorObjectResponsePath: " + pagingCursorObjectResponsePath + ", pagingUrlPath: " + pagingUrlPath + ", pagingHeaderLinkRel: " + pagingHeaderLinkRel + ", autoMapping: " + autoMapping + ", mappedTable: " + mappedTable + ", frequency: " + frequency + ", pizzlyConnectionId: " + pizzlyConnectionId + ", pizzlyProviderConfigKey: " + pizzlyProviderConfigKey + ", maxTotal: " + maxTotal + ", friendlyName: " + friendlyName + ", metadata: " + metadata + "}";
+    return "NangoSyncConfig{" + "url: " + url + ", baseUrl: " + baseUrl + ", method: " + method + ", headers: " + headers + ", body: " + body + ", queryParams: " + queryParams + ", uniqueKey: " + uniqueKey + ", responsePath: " + responsePath + ", pagingCursorRequestPath: " + pagingCursorRequestPath + ", pagingCursorMetadataResponsePath: " + pagingCursorMetadataResponsePath + ", pagingCursorObjectResponsePath: " + pagingCursorObjectResponsePath + ", pagingUrlPath: " + pagingUrlPath + ", pagingHeaderLinkRel: " + pagingHeaderLinkRel + ", autoMapping: " + autoMapping + ", mappedTable: " + mappedTable + ", frequency: " + frequency + ", pizzlyConnectionId: " + pizzlyConnectionId + ", pizzlyProviderConfigKey: " + pizzlyProviderConfigKey + ", maxTotal: " + maxTotal + ", friendlyName: " + friendlyName + ", metadata: " + metadata + "}";
   }
 
-  public static MethodStage builder() {
+  public static UrlStage builder() {
     return new Builder();
+  }
+
+  public interface UrlStage {
+    MethodStage url(String url);
+
+    Builder from(NangoSyncConfig other);
   }
 
   public interface MethodStage {
     _FinalStage method(NangoHttpMethod method);
-
-    Builder from(NangoSyncConfig other);
   }
 
   public interface _FinalStage {
@@ -314,7 +326,9 @@ public final class NangoSyncConfig {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements MethodStage, _FinalStage {
+  public static final class Builder implements UrlStage, MethodStage, _FinalStage {
+    private String url;
+
     private NangoHttpMethod method;
 
     private Map<String, Object> metadata = new LinkedHashMap<>();
@@ -360,6 +374,7 @@ public final class NangoSyncConfig {
 
     @Override
     public Builder from(NangoSyncConfig other) {
+      url(other.getUrl());
       baseUrl(other.getBaseUrl());
       method(other.getMethod());
       headers(other.getHeaders());
@@ -380,6 +395,13 @@ public final class NangoSyncConfig {
       maxTotal(other.getMaxTotal());
       friendlyName(other.getFriendlyName());
       metadata(other.getMetadata());
+      return this;
+    }
+
+    @Override
+    @JsonSetter("url")
+    public MethodStage url(String url) {
+      this.url = url;
       return this;
     }
 
@@ -719,7 +741,7 @@ public final class NangoSyncConfig {
 
     @Override
     public NangoSyncConfig build() {
-      return new NangoSyncConfig(baseUrl, method, headers, body, queryParams, uniqueKey, responsePath, pagingCursorRequestPath, pagingCursorMetadataResponsePath, pagingCursorObjectResponsePath, pagingUrlPath, pagingHeaderLinkRel, autoMapping, mappedTable, frequency, pizzlyConnectionId, pizzlyProviderConfigKey, maxTotal, friendlyName, metadata);
+      return new NangoSyncConfig(url, baseUrl, method, headers, body, queryParams, uniqueKey, responsePath, pagingCursorRequestPath, pagingCursorMetadataResponsePath, pagingCursorObjectResponsePath, pagingUrlPath, pagingHeaderLinkRel, autoMapping, mappedTable, frequency, pizzlyConnectionId, pizzlyProviderConfigKey, maxTotal, friendlyName, metadata);
     }
   }
 }
