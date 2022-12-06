@@ -10,7 +10,6 @@ import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -29,7 +28,7 @@ public final class NangoSyncConfig {
 
   private final Optional<Object> body;
 
-  private final Map<String, Object> queryParams;
+  private final Optional<Map<String, Object>> queryParams;
 
   private final Optional<String> uniqueKey;
 
@@ -64,9 +63,10 @@ public final class NangoSyncConfig {
   private int _cachedHashCode;
 
   NangoSyncConfig(String url, NangoHttpMethod method, Optional<String> baseUrl,
-      Optional<Map<String, Object>> headers, Optional<Object> body, Map<String, Object> queryParams,
-      Optional<String> uniqueKey, Optional<String> responsePath,
-      Optional<String> pagingCursorRequestPath, Optional<String> pagingCursorMetadataResponsePath,
+      Optional<Map<String, Object>> headers, Optional<Object> body,
+      Optional<Map<String, Object>> queryParams, Optional<String> uniqueKey,
+      Optional<String> responsePath, Optional<String> pagingCursorRequestPath,
+      Optional<String> pagingCursorMetadataResponsePath,
       Optional<String> pagingCursorObjectResponsePath, Optional<String> pagingUrlPath,
       Optional<String> pagingHeaderLinkRel, Optional<Boolean> autoMapping,
       Optional<String> mappedTable, Optional<Integer> frequency,
@@ -122,7 +122,7 @@ public final class NangoSyncConfig {
   }
 
   @JsonProperty("query_params")
-  public Map<String, Object> getQueryParams() {
+  public Optional<Map<String, Object>> getQueryParams() {
     return queryParams;
   }
 
@@ -253,11 +253,9 @@ public final class NangoSyncConfig {
 
     _FinalStage body(Object body);
 
+    _FinalStage queryParams(Optional<Map<String, Object>> queryParams);
+
     _FinalStage queryParams(Map<String, Object> queryParams);
-
-    _FinalStage putAllQueryParams(Map<String, Object> queryParams);
-
-    _FinalStage queryParams(String key, Object value);
 
     _FinalStage uniqueKey(Optional<String> uniqueKey);
 
@@ -358,7 +356,7 @@ public final class NangoSyncConfig {
 
     private Optional<String> uniqueKey = Optional.empty();
 
-    private Map<String, Object> queryParams = new LinkedHashMap<>();
+    private Optional<Map<String, Object>> queryParams = Optional.empty();
 
     private Optional<Object> body = Optional.empty();
 
@@ -652,14 +650,8 @@ public final class NangoSyncConfig {
     }
 
     @Override
-    public _FinalStage queryParams(String key, Object value) {
-      this.queryParams.put(key, value);
-      return this;
-    }
-
-    @Override
-    public _FinalStage putAllQueryParams(Map<String, Object> queryParams) {
-      this.queryParams.putAll(queryParams);
+    public _FinalStage queryParams(Map<String, Object> queryParams) {
+      this.queryParams = Optional.of(queryParams);
       return this;
     }
 
@@ -668,9 +660,8 @@ public final class NangoSyncConfig {
         value = "query_params",
         nulls = Nulls.SKIP
     )
-    public _FinalStage queryParams(Map<String, Object> queryParams) {
-      this.queryParams.clear();
-      this.queryParams.putAll(queryParams);
+    public _FinalStage queryParams(Optional<Map<String, Object>> queryParams) {
+      this.queryParams = queryParams;
       return this;
     }
 

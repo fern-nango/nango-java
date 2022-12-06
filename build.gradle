@@ -36,7 +36,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'io.github.fern-api'
             artifactId = 'nango'
-            version = '0.0.4'
+            version = '0.0.5'
             from components.java
         }
     }
