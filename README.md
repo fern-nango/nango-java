@@ -9,7 +9,7 @@ API documentation is available [here](https://docs.nango.dev/add-sync).
 
 ## Usage
 
-Check out the [sample app](.sample-app/src/main/java/sample/App.java) which consumes this SDK!
+Check out the [sample app](sample-app/src/main/java/sample/App.java) which consumes this SDK!
 
 ```java
 NangoApiClient nango = new NangoApiClient("https://localhost:3003");
