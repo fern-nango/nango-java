@@ -16,12 +16,12 @@ NangoApiClient nango = new NangoApiClient("https://localhost:3003");
 try {
   nango.sync().add(Add.Request.builder()
     .body(NangoSyncConfig.builder()
-    .method(NangoHttpMethod.GET)
-    .baseUrl("https://www.reddit.com/r/${subreddit}/new.json")
-    .responsePath("data.children")
-    .pagingCursorRequestPath("after")
-    .pagingCursorObjectResponsePath("paging.next.after")
-    .build())
+      .method(NangoHttpMethod.GET)
+      .baseUrl("https://www.reddit.com/r/${subreddit}/new.json")
+      .responsePath("data.children")
+      .pagingCursorRequestPath("after")
+      .pagingCursorObjectResponsePath("paging.next.after")
+      .build())
     .build());
 } catch (AddException ex) {
   System.out.println("Failed to add sync: " + ex.getMessage());
