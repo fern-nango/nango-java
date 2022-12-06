@@ -25,7 +25,7 @@ public final class NangoSyncConfig {
 
   private final Map<String, Object> headers;
 
-  private final Object body;
+  private final Optional<Object> body;
 
   private final Map<String, Object> queryParams;
 
@@ -62,7 +62,7 @@ public final class NangoSyncConfig {
   private int _cachedHashCode;
 
   NangoSyncConfig(Optional<String> baseUrl, NangoHttpMethod method, Map<String, Object> headers,
-      Object body, Map<String, Object> queryParams, Optional<String> uniqueKey,
+      Optional<Object> body, Map<String, Object> queryParams, Optional<String> uniqueKey,
       Optional<String> responsePath, Optional<String> pagingCursorRequestPath,
       Optional<String> pagingCursorMetadataResponsePath,
       Optional<String> pagingCursorObjectResponsePath, Optional<String> pagingUrlPath,
@@ -108,7 +108,7 @@ public final class NangoSyncConfig {
   }
 
   @JsonProperty("body")
-  public Object getBody() {
+  public Optional<Object> getBody() {
     return body;
   }
 
@@ -220,13 +220,9 @@ public final class NangoSyncConfig {
   }
 
   public interface MethodStage {
-    BodyStage method(NangoHttpMethod method);
+    _FinalStage method(NangoHttpMethod method);
 
     Builder from(NangoSyncConfig other);
-  }
-
-  public interface BodyStage {
-    _FinalStage body(Object body);
   }
 
   public interface _FinalStage {
@@ -241,6 +237,10 @@ public final class NangoSyncConfig {
     _FinalStage putAllHeaders(Map<String, Object> headers);
 
     _FinalStage headers(String key, Object value);
+
+    _FinalStage body(Optional<Object> body);
+
+    _FinalStage body(Object body);
 
     _FinalStage queryParams(Map<String, Object> queryParams);
 
@@ -314,10 +314,8 @@ public final class NangoSyncConfig {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements MethodStage, BodyStage, _FinalStage {
+  public static final class Builder implements MethodStage, _FinalStage {
     private NangoHttpMethod method;
-
-    private Object body;
 
     private Map<String, Object> metadata = new LinkedHashMap<>();
 
@@ -350,6 +348,8 @@ public final class NangoSyncConfig {
     private Optional<String> uniqueKey = Optional.empty();
 
     private Map<String, Object> queryParams = new LinkedHashMap<>();
+
+    private Optional<Object> body = Optional.empty();
 
     private Map<String, Object> headers = new LinkedHashMap<>();
 
@@ -385,15 +385,8 @@ public final class NangoSyncConfig {
 
     @Override
     @JsonSetter("method")
-    public BodyStage method(NangoHttpMethod method) {
+    public _FinalStage method(NangoHttpMethod method) {
       this.method = method;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("body")
-    public _FinalStage body(Object body) {
-      this.body = body;
       return this;
     }
 
@@ -666,6 +659,22 @@ public final class NangoSyncConfig {
     public _FinalStage queryParams(Map<String, Object> queryParams) {
       this.queryParams.clear();
       this.queryParams.putAll(queryParams);
+      return this;
+    }
+
+    @Override
+    public _FinalStage body(Object body) {
+      this.body = Optional.of(body);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(
+        value = "body",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage body(Optional<Object> body) {
+      this.body = body;
       return this;
     }
 
