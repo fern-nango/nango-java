@@ -7,6 +7,29 @@
 
 API documentation is available [here](https://docs.nango.dev/add-sync).
 
+## Installation
+Check [releases](https://github.com/fern-nango/nango-java/releases) to get the latest version.
+
+### Gradle users
+
+Add this dependency to your project's build file:
+
+```groovy
+implementation "io.github.fern-api:nango:0.0.1"
+```
+
+### Maven users
+
+Add this dependency to your project's POM:
+
+```xml
+<dependency>
+  <groupId>io.github.fern-api</groupId>
+  <artifactId>nango</artifactId>
+  <version>0.0.1</version>
+</dependency>
+```
+
 ## Usage
 
 Check out the [sample app](sample-app/src/main/java/sample/App.java) which consumes this SDK!
